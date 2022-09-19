@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.YearlyBillMapper" >
+  <resultMap id="BaseResultMap" type="pojo.YearlyBill" >
+    <id column="yearly_id" property="yearlyId" jdbcType="INTEGER" />
+    <result column="open_id" property="openId" jdbcType="VARCHAR" />
+    <result column="yearly_snacks" property="yearlySnacks" jdbcType="REAL" />
+    <result column="yearly_fare" property="yearlyFare" jdbcType="REAL" />
+    <result column="yearly_stay" property="yearlyStay" jdbcType="REAL" />
+    <result column="yearly_repast" property="yearlyRepast" jdbcType="REAL" />
+    <result column="yearly_recreation" property="yearlyRecreation" jdbcType="REAL" />
+    <result column="yearly_clothing" property="yearlyClothing" jdbcType="REAL" />
+    <result column="yearly_daily" property="yearlyDaily" jdbcType="REAL" />
+    <result column="yearly_other" property="yearlyOther" jdbcType="REAL" />
+    <result column="yearly_total" property="yearlyTotal" jdbcType="REAL" />
+    <result column="yearly_time" property="yearlyTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    yearly_id, open_id, yearly_snacks, yearly_fare, yearly_stay, yearly_repast, yearly_recreation, 
+    yearly_clothing, yearly_daily, yearly_other, yearly_total, yearly_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="pojo.YearlyBillExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from yearly_bill
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from yearly_bill
+    where yearly_id = #{yearlyId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from yearly_bill
+    where yearly_id = #{yearlyId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="pojo.YearlyBillExample" >
+    delete from yearly_bill
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="pojo.YearlyBill" >
+    insert into yearly_bill (yearly_id, open_id, yearly_snacks, 
+      yearly_fare, yearly_stay, yearly_repast, 
+      yearly_recreation, yearly_clothing, yearly_daily, 
+      yearly_other, yearly_total, yearly_time
+      )
+    values (#{yearlyId,jdbcType=INTEGER}, #{openId,jdbcType=VARCHAR}, #{yearlySnacks,jdbcType=REAL}, 
+      #{yearlyFare,jdbcType=REAL}, #{yearlyStay,jdbcType=REAL}, #{yearlyRepast,jdbcType=REAL}, 
+      #{yearlyRecreation,jdbcType=REAL}, #{yearlyClothing,jdbcType=REAL}, #{yearlyDaily,jdbcType=REAL}, 
+      #{yearlyOther,jdbcType=REAL}, #{yearlyTotal,jdbcType=REAL}, #{yearlyTime,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="pojo.YearlyBill" >
+    insert into yearly_bill
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="yearlyId != null" >
+        yearly_id,
+      </if>
+      <if test="openId != null" >
+        open_id,
+      </if>
+      <if test="yearlySnacks != null" >
+        yearly_snacks,
+      </if>
+      <if test="yearlyFare != null" >
+        yearly_fare,
+      </if>
+      <if test="yearlyStay != null" >
+        yearly_stay,
+      </if>
+      <if test="yearlyRepast != null" >
+        yearly_repast,
+      </if>
+      <if test="yearlyRecreation != null" >
+        yearly_recreation,
+      </if>
+      <if test="yearlyClothing != null" >
+        yearly_clothing,
+      </if>
+      <if test="yearlyDaily != null" >
+        yearly_daily,
+      </if>
+      <if test="yearlyOther != null" >
+        yearly_other,
+      </if>
+      <if test="yearlyTotal != null" >
+        yearly_total,
+      </if>
+      <if test="yearlyTime != null" >
+        yearly_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="yearlyId != null" >
+        #{yearlyId,jdbcType=INTEGER},
+      </if>
+      <if test="openId != null" >
+        #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="yearlySnacks != null" >
+        #{yearlySnacks,jdbcType=REAL},
+      </if>
+      <if test="yearlyFare != null" >
+        #{yearlyFare,jdbcType=REAL},
+      </if>
+      <if test="yearlyStay != null" >
+        #{yearlyStay,jdbcType=REAL},
+      </if>
+      <if test="yearlyRepast != null" >
+        #{yearlyRepast,jdbcType=REAL},
+      </if>
+      <if test="yearlyRecreation != null" >
+        #{yearlyRecreation,jdbcType=REAL},
+      </if>
+      <if test="yearlyClothing != null" >
+        #{yearlyClothing,jdbcType=REAL},
+      </if>
+      <if test="yearlyDaily != null" >
+        #{yearlyDaily,jdbcType=REAL},
+      </if>
+      <if test="yearlyOther != null" >
+        #{yearlyOther,jdbcType=REAL},
+      </if>
+      <if test="yearlyTotal != null" >
+        #{yearlyTotal,jdbcType=REAL},
+      </if>
+      <if test="yearlyTime != null" >
+        #{yearlyTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="pojo.YearlyBillExample" resultType="java.lang.Integer" >
+    select count(*) from yearly_bill
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update yearly_bill
+    <set >
+      <if test="record.yearlyId != null" >
+        yearly_id = #{record.yearlyId,jdbcType=INTEGER},
+      </if>
+      <if test="record.openId != null" >
+        open_id = #{record.openId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yearlySnacks != null" >
+        yearly_snacks = #{record.yearlySnacks,jdbcType=REAL},
+      </if>
+      <if test="record.yearlyFare != null" >
+        yearly_fare = #{record.yearlyFare,jdbcType=REAL},
+      </if>
+      <if test="record.yearlyStay != null" >
+        yearly_stay = #{record.yearlyStay,jdbcType=REAL},
+      </if>
+      <if test="record.yearlyRepast != null" >
+        yearly_repast = #{record.yearlyRepast,jdbcType=REAL},
+      </if>
+      <if test="record.yearlyRecreation != null" >
+        yearly_recreation = #{record.yearlyRecreation,jdbcType=REAL},
+      </if>
+      <if test="record.yearlyClothing != null" >
+        yearly_clothing = #{record.yearlyClothing,jdbcType=REAL},
+      </if>
+      <if test="record.yearlyDaily != null" >
+        yearly_daily = #{record.yearlyDaily,jdbcType=REAL},
+      </if>
+      <if test="record.yearlyOther != null" >
+        yearly_other = #{record.yearlyOther,jdbcType=REAL},
+      </if>
+      <if test="record.yearlyTotal != null" >
+        yearly_total = #{record.yearlyTotal,jdbcType=REAL},
+      </if>
+      <if test="record.yearlyTime != null" >
+        yearly_time = #{record.yearlyTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update yearly_bill
+    set yearly_id = #{record.yearlyId,jdbcType=INTEGER},
+      open_id = #{record.openId,jdbcType=VARCHAR},
+      yearly_snacks = #{record.yearlySnacks,jdbcType=REAL},
+      yearly_fare = #{record.yearlyFare,jdbcType=REAL},
+      yearly_stay = #{record.yearlyStay,jdbcType=REAL},
+      yearly_repast = #{record.yearlyRepast,jdbcType=REAL},
+      yearly_recreation = #{record.yearlyRecreation,jdbcType=REAL},
+      yearly_clothing = #{record.yearlyClothing,jdbcType=REAL},
+      yearly_daily = #{record.yearlyDaily,jdbcType=REAL},
+      yearly_other = #{record.yearlyOther,jdbcType=REAL},
+      yearly_total = #{record.yearlyTotal,jdbcType=REAL},
+      yearly_time = #{record.yearlyTime,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="pojo.YearlyBill" >
+    update yearly_bill
+    <set >
+      <if test="openId != null" >
+        open_id = #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="yearlySnacks != null" >
+        yearly_snacks = #{yearlySnacks,jdbcType=REAL},
+      </if>
+      <if test="yearlyFare != null" >
+        yearly_fare = #{yearlyFare,jdbcType=REAL},
+      </if>
+      <if test="yearlyStay != null" >
+        yearly_stay = #{yearlyStay,jdbcType=REAL},
+      </if>
+      <if test="yearlyRepast != null" >
+        yearly_repast = #{yearlyRepast,jdbcType=REAL},
+      </if>
+      <if test="yearlyRecreation != null" >
+        yearly_recreation = #{yearlyRecreation,jdbcType=REAL},
+      </if>
+      <if test="yearlyClothing != null" >
+        yearly_clothing = #{yearlyClothing,jdbcType=REAL},
+      </if>
+      <if test="yearlyDaily != null" >
+        yearly_daily = #{yearlyDaily,jdbcType=REAL},
+      </if>
+      <if test="yearlyOther != null" >
+        yearly_other = #{yearlyOther,jdbcType=REAL},
+      </if>
+      <if test="yearlyTotal != null" >
+        yearly_total = #{yearlyTotal,jdbcType=REAL},
+      </if>
+      <if test="yearlyTime != null" >
+        yearly_time = #{yearlyTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where yearly_id = #{yearlyId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pojo.YearlyBill" >
+    update yearly_bill
+    set open_id = #{openId,jdbcType=VARCHAR},
+      yearly_snacks = #{yearlySnacks,jdbcType=REAL},
+      yearly_fare = #{yearlyFare,jdbcType=REAL},
+      yearly_stay = #{yearlyStay,jdbcType=REAL},
+      yearly_repast = #{yearlyRepast,jdbcType=REAL},
+      yearly_recreation = #{yearlyRecreation,jdbcType=REAL},
+      yearly_clothing = #{yearlyClothing,jdbcType=REAL},
+      yearly_daily = #{yearlyDaily,jdbcType=REAL},
+      yearly_other = #{yearlyOther,jdbcType=REAL},
+      yearly_total = #{yearlyTotal,jdbcType=REAL},
+      yearly_time = #{yearlyTime,jdbcType=VARCHAR}
+    where yearly_id = #{yearlyId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.MonthlyBillMapper" >
+  <resultMap id="BaseResultMap" type="pojo.MonthlyBill" >
+    <id column="monthly_id" property="monthlyId" jdbcType="INTEGER" />
+    <result column="open_id" property="openId" jdbcType="VARCHAR" />
+    <result column="monthly_snacks" property="monthlySnacks" jdbcType="REAL" />
+    <result column="monthly_fare" property="monthlyFare" jdbcType="REAL" />
+    <result column="monthly_stay" property="monthlyStay" jdbcType="REAL" />
+    <result column="monthly_repast" property="monthlyRepast" jdbcType="REAL" />
+    <result column="monthly_recreation" property="monthlyRecreation" jdbcType="REAL" />
+    <result column="monthly_clothing" property="monthlyClothing" jdbcType="REAL" />
+    <result column="monthly_daily" property="monthlyDaily" jdbcType="REAL" />
+    <result column="monthly_other" property="monthlyOther" jdbcType="REAL" />
+    <result column="monthly_total" property="monthlyTotal" jdbcType="REAL" />
+    <result column="monthly_time" property="monthlyTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    monthly_id, open_id, monthly_snacks, monthly_fare, monthly_stay, monthly_repast, 
+    monthly_recreation, monthly_clothing, monthly_daily, monthly_other, monthly_total, 
+    monthly_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="pojo.MonthlyBillExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from monthly_bill
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from monthly_bill
+    where monthly_id = #{monthlyId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from monthly_bill
+    where monthly_id = #{monthlyId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="pojo.MonthlyBillExample" >
+    delete from monthly_bill
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="pojo.MonthlyBill" >
+    insert into monthly_bill (monthly_id, open_id, monthly_snacks, 
+      monthly_fare, monthly_stay, monthly_repast, 
+      monthly_recreation, monthly_clothing, monthly_daily, 
+      monthly_other, monthly_total, monthly_time
+      )
+    values (#{monthlyId,jdbcType=INTEGER}, #{openId,jdbcType=VARCHAR}, #{monthlySnacks,jdbcType=REAL}, 
+      #{monthlyFare,jdbcType=REAL}, #{monthlyStay,jdbcType=REAL}, #{monthlyRepast,jdbcType=REAL}, 
+      #{monthlyRecreation,jdbcType=REAL}, #{monthlyClothing,jdbcType=REAL}, #{monthlyDaily,jdbcType=REAL}, 
+      #{monthlyOther,jdbcType=REAL}, #{monthlyTotal,jdbcType=REAL}, #{monthlyTime,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="pojo.MonthlyBill" >
+    insert into monthly_bill
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="monthlyId != null" >
+        monthly_id,
+      </if>
+      <if test="openId != null" >
+        open_id,
+      </if>
+      <if test="monthlySnacks != null" >
+        monthly_snacks,
+      </if>
+      <if test="monthlyFare != null" >
+        monthly_fare,
+      </if>
+      <if test="monthlyStay != null" >
+        monthly_stay,
+      </if>
+      <if test="monthlyRepast != null" >
+        monthly_repast,
+      </if>
+      <if test="monthlyRecreation != null" >
+        monthly_recreation,
+      </if>
+      <if test="monthlyClothing != null" >
+        monthly_clothing,
+      </if>
+      <if test="monthlyDaily != null" >
+        monthly_daily,
+      </if>
+      <if test="monthlyOther != null" >
+        monthly_other,
+      </if>
+      <if test="monthlyTotal != null" >
+        monthly_total,
+      </if>
+      <if test="monthlyTime != null" >
+        monthly_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="monthlyId != null" >
+        #{monthlyId,jdbcType=INTEGER},
+      </if>
+      <if test="openId != null" >
+        #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="monthlySnacks != null" >
+        #{monthlySnacks,jdbcType=REAL},
+      </if>
+      <if test="monthlyFare != null" >
+        #{monthlyFare,jdbcType=REAL},
+      </if>
+      <if test="monthlyStay != null" >
+        #{monthlyStay,jdbcType=REAL},
+      </if>
+      <if test="monthlyRepast != null" >
+        #{monthlyRepast,jdbcType=REAL},
+      </if>
+      <if test="monthlyRecreation != null" >
+        #{monthlyRecreation,jdbcType=REAL},
+      </if>
+      <if test="monthlyClothing != null" >
+        #{monthlyClothing,jdbcType=REAL},
+      </if>
+      <if test="monthlyDaily != null" >
+        #{monthlyDaily,jdbcType=REAL},
+      </if>
+      <if test="monthlyOther != null" >
+        #{monthlyOther,jdbcType=REAL},
+      </if>
+      <if test="monthlyTotal != null" >
+        #{monthlyTotal,jdbcType=REAL},
+      </if>
+      <if test="monthlyTime != null" >
+        #{monthlyTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="pojo.MonthlyBillExample" resultType="java.lang.Integer" >
+    select count(*) from monthly_bill
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update monthly_bill
+    <set >
+      <if test="record.monthlyId != null" >
+        monthly_id = #{record.monthlyId,jdbcType=INTEGER},
+      </if>
+      <if test="record.openId != null" >
+        open_id = #{record.openId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.monthlySnacks != null" >
+        monthly_snacks = #{record.monthlySnacks,jdbcType=REAL},
+      </if>
+      <if test="record.monthlyFare != null" >
+        monthly_fare = #{record.monthlyFare,jdbcType=REAL},
+      </if>
+      <if test="record.monthlyStay != null" >
+        monthly_stay = #{record.monthlyStay,jdbcType=REAL},
+      </if>
+      <if test="record.monthlyRepast != null" >
+        monthly_repast = #{record.monthlyRepast,jdbcType=REAL},
+      </if>
+      <if test="record.monthlyRecreation != null" >
+        monthly_recreation = #{record.monthlyRecreation,jdbcType=REAL},
+      </if>
+      <if test="record.monthlyClothing != null" >
+        monthly_clothing = #{record.monthlyClothing,jdbcType=REAL},
+      </if>
+      <if test="record.monthlyDaily != null" >
+        monthly_daily = #{record.monthlyDaily,jdbcType=REAL},
+      </if>
+      <if test="record.monthlyOther != null" >
+        monthly_other = #{record.monthlyOther,jdbcType=REAL},
+      </if>
+      <if test="record.monthlyTotal != null" >
+        monthly_total = #{record.monthlyTotal,jdbcType=REAL},
+      </if>
+      <if test="record.monthlyTime != null" >
+        monthly_time = #{record.monthlyTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update monthly_bill
+    set monthly_id = #{record.monthlyId,jdbcType=INTEGER},
+      open_id = #{record.openId,jdbcType=VARCHAR},
+      monthly_snacks = #{record.monthlySnacks,jdbcType=REAL},
+      monthly_fare = #{record.monthlyFare,jdbcType=REAL},
+      monthly_stay = #{record.monthlyStay,jdbcType=REAL},
+      monthly_repast = #{record.monthlyRepast,jdbcType=REAL},
+      monthly_recreation = #{record.monthlyRecreation,jdbcType=REAL},
+      monthly_clothing = #{record.monthlyClothing,jdbcType=REAL},
+      monthly_daily = #{record.monthlyDaily,jdbcType=REAL},
+      monthly_other = #{record.monthlyOther,jdbcType=REAL},
+      monthly_total = #{record.monthlyTotal,jdbcType=REAL},
+      monthly_time = #{record.monthlyTime,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="pojo.MonthlyBill" >
+    update monthly_bill
+    <set >
+      <if test="openId != null" >
+        open_id = #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="monthlySnacks != null" >
+        monthly_snacks = #{monthlySnacks,jdbcType=REAL},
+      </if>
+      <if test="monthlyFare != null" >
+        monthly_fare = #{monthlyFare,jdbcType=REAL},
+      </if>
+      <if test="monthlyStay != null" >
+        monthly_stay = #{monthlyStay,jdbcType=REAL},
+      </if>
+      <if test="monthlyRepast != null" >
+        monthly_repast = #{monthlyRepast,jdbcType=REAL},
+      </if>
+      <if test="monthlyRecreation != null" >
+        monthly_recreation = #{monthlyRecreation,jdbcType=REAL},
+      </if>
+      <if test="monthlyClothing != null" >
+        monthly_clothing = #{monthlyClothing,jdbcType=REAL},
+      </if>
+      <if test="monthlyDaily != null" >
+        monthly_daily = #{monthlyDaily,jdbcType=REAL},
+      </if>
+      <if test="monthlyOther != null" >
+        monthly_other = #{monthlyOther,jdbcType=REAL},
+      </if>
+      <if test="monthlyTotal != null" >
+        monthly_total = #{monthlyTotal,jdbcType=REAL},
+      </if>
+      <if test="monthlyTime != null" >
+        monthly_time = #{monthlyTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where monthly_id = #{monthlyId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pojo.MonthlyBill" >
+    update monthly_bill
+    set open_id = #{openId,jdbcType=VARCHAR},
+      monthly_snacks = #{monthlySnacks,jdbcType=REAL},
+      monthly_fare = #{monthlyFare,jdbcType=REAL},
+      monthly_stay = #{monthlyStay,jdbcType=REAL},
+      monthly_repast = #{monthlyRepast,jdbcType=REAL},
+      monthly_recreation = #{monthlyRecreation,jdbcType=REAL},
+      monthly_clothing = #{monthlyClothing,jdbcType=REAL},
+      monthly_daily = #{monthlyDaily,jdbcType=REAL},
+      monthly_other = #{monthlyOther,jdbcType=REAL},
+      monthly_total = #{monthlyTotal,jdbcType=REAL},
+      monthly_time = #{monthlyTime,jdbcType=VARCHAR}
+    where monthly_id = #{monthlyId,jdbcType=INTEGER}
+  </update>
+
+  <select id="allMonthly" parameterType="String" resultMap="BaseResultMap">
+    select monthly_id,open_id,
+    SUM(monthly_snacks) AS monthly_snacks,
+    SUM(monthly_fare) AS monthly_fare,
+    SUM(monthly_stay) AS monthly_stay,
+    SUM(monthly_repast) AS monthly_repast,
+    SUM(monthly_recreation) AS monthly_recreation,
+    SUM(monthly_clothing) AS monthly_clothing,
+    SUM(monthly_daily) AS monthly_daily,
+    SUM(monthly_other) AS monthly_other,
+    SUM(monthly_total) AS monthly_total,
+    monthly_time
+    from monthly_bill
+    WHERE monthly_time LIKE '%${value}-%'
+    group by open_id
+  </select>
+</mapper>

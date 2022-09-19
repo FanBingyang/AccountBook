@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.ExpenseMapper" >
+  <resultMap id="BaseResultMap" type="pojo.Expense" >
+    <id column="expense_id" property="expenseId" jdbcType="INTEGER" />
+    <result column="open_id" property="openId" jdbcType="VARCHAR" />
+    <result column="expense_title" property="expenseTitle" jdbcType="VARCHAR" />
+    <result column="expense_category" property="expenseCategory" jdbcType="VARCHAR" />
+    <result column="expense_money" property="expenseMoney" jdbcType="REAL" />
+    <result column="expense_explain" property="expenseExplain" jdbcType="VARCHAR" />
+    <result column="expense_time" property="expenseTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    expense_id, open_id, expense_title, expense_category, expense_money, expense_explain, 
+    expense_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="pojo.ExpenseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from expense
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from expense
+    where expense_id = #{expenseId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from expense
+    where expense_id = #{expenseId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="pojo.ExpenseExample" >
+    delete from expense
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="pojo.Expense" >
+    insert into expense (expense_id, open_id, expense_title, 
+      expense_category, expense_money, expense_explain, 
+      expense_time)
+    values (#{expenseId,jdbcType=INTEGER}, #{openId,jdbcType=VARCHAR}, #{expenseTitle,jdbcType=VARCHAR}, 
+      #{expenseCategory,jdbcType=VARCHAR}, #{expenseMoney,jdbcType=REAL}, #{expenseExplain,jdbcType=VARCHAR}, 
+      #{expenseTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="pojo.Expense" >
+    insert into expense
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="expenseId != null" >
+        expense_id,
+      </if>
+      <if test="openId != null" >
+        open_id,
+      </if>
+      <if test="expenseTitle != null" >
+        expense_title,
+      </if>
+      <if test="expenseCategory != null" >
+        expense_category,
+      </if>
+      <if test="expenseMoney != null" >
+        expense_money,
+      </if>
+      <if test="expenseExplain != null" >
+        expense_explain,
+      </if>
+      <if test="expenseTime != null" >
+        expense_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="expenseId != null" >
+        #{expenseId,jdbcType=INTEGER},
+      </if>
+      <if test="openId != null" >
+        #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="expenseTitle != null" >
+        #{expenseTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="expenseCategory != null" >
+        #{expenseCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="expenseMoney != null" >
+        #{expenseMoney,jdbcType=REAL},
+      </if>
+      <if test="expenseExplain != null" >
+        #{expenseExplain,jdbcType=VARCHAR},
+      </if>
+      <if test="expenseTime != null" >
+        #{expenseTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="pojo.ExpenseExample" resultType="java.lang.Integer" >
+    select count(*) from expense
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update expense
+    <set >
+      <if test="record.expenseId != null" >
+        expense_id = #{record.expenseId,jdbcType=INTEGER},
+      </if>
+      <if test="record.openId != null" >
+        open_id = #{record.openId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expenseTitle != null" >
+        expense_title = #{record.expenseTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expenseCategory != null" >
+        expense_category = #{record.expenseCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expenseMoney != null" >
+        expense_money = #{record.expenseMoney,jdbcType=REAL},
+      </if>
+      <if test="record.expenseExplain != null" >
+        expense_explain = #{record.expenseExplain,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expenseTime != null" >
+        expense_time = #{record.expenseTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update expense
+    set expense_id = #{record.expenseId,jdbcType=INTEGER},
+      open_id = #{record.openId,jdbcType=VARCHAR},
+      expense_title = #{record.expenseTitle,jdbcType=VARCHAR},
+      expense_category = #{record.expenseCategory,jdbcType=VARCHAR},
+      expense_money = #{record.expenseMoney,jdbcType=REAL},
+      expense_explain = #{record.expenseExplain,jdbcType=VARCHAR},
+      expense_time = #{record.expenseTime,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+    <include refid="Update_By_Example_Where_Clause" />
+  </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="pojo.Expense" >
+    update expense
+    <set >
+      <if test="openId != null" >
+        open_id = #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="expenseTitle != null" >
+        expense_title = #{expenseTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="expenseCategory != null" >
+        expense_category = #{expenseCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="expenseMoney != null" >
+        expense_money = #{expenseMoney,jdbcType=REAL},
+      </if>
+      <if test="expenseExplain != null" >
+        expense_explain = #{expenseExplain,jdbcType=VARCHAR},
+      </if>
+      <if test="expenseTime != null" >
+        expense_time = #{expenseTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where expense_id = #{expenseId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pojo.Expense" >
+    update expense
+    set open_id = #{openId,jdbcType=VARCHAR},
+      expense_title = #{expenseTitle,jdbcType=VARCHAR},
+      expense_category = #{expenseCategory,jdbcType=VARCHAR},
+      expense_money = #{expenseMoney,jdbcType=REAL},
+      expense_explain = #{expenseExplain,jdbcType=VARCHAR},
+      expense_time = #{expenseTime,jdbcType=VARCHAR}
+    where expense_id = #{expenseId,jdbcType=INTEGER}
+  </update>
+
+  <!--分页查询-->
+  <select id="selectExpenseByLimit" resultMap="BaseResultMap" parameterType="PageInfo">
+    select
+    <include refid="Base_Column_List"/>
+    from expense
+    where open_id='${openId}'
+    order by expense_time desc
+    limit ${start},${pageSize}
+  </select>
+
+  <!--查询出某个月有消费情况的用户open_id,返回List<String>-->
+  <select id="selectOpenIdList" resultType="String" parameterType="String">
+    select distinct open_id from expense where expense_time like '%${value}%'
+  </select>
+
+  <!--根据用户open_id统计出该用户本月所有消费情况的汇总,返回List<Expense>-->
+  <select id="selectAllByOpenId" resultMap="BaseResultMap" parameterType="Map">
+    select
+        expense_id,
+        open_id,
+        expense_title,
+        expense_category,
+        sum(expense_money) as expense_money,
+        expense_explain,
+        expense_time
+    from
+        expense
+    where
+        open_id = '${open_id}'
+    and expense_time like '${expense_time}%'
+    group by
+        expense_category
+  </select>
+
+  <!--查询当日消费总额-->
+  <select id="selectTotal" resultType="Float">
+    select
+        sum(expense_money)
+    from
+        expense
+    where
+        open_id = '${open_id}'
+    and expense_time like '${expense_time}%'
+  </select>
+</mapper>

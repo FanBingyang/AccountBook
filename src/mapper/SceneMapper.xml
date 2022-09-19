@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.SceneMapper" >
+  <resultMap id="BaseResultMap" type="pojo.Scene" >
+    <id column="scene_id" property="sceneId" jdbcType="INTEGER" />
+    <result column="open_id" property="openId" jdbcType="VARCHAR" />
+    <result column="scene_title" property="sceneTitle" jdbcType="VARCHAR" />
+    <result column="scene_snacks" property="sceneSnacks" jdbcType="REAL" />
+    <result column="scene_fare" property="sceneFare" jdbcType="REAL" />
+    <result column="scene_stay" property="sceneStay" jdbcType="REAL" />
+    <result column="scene_repast" property="sceneRepast" jdbcType="REAL" />
+    <result column="scene_recreation" property="sceneRecreation" jdbcType="REAL" />
+    <result column="scene_clothing" property="sceneClothing" jdbcType="REAL" />
+    <result column="scene_daily" property="sceneDaily" jdbcType="REAL" />
+    <result column="scene_other" property="sceneOther" jdbcType="REAL" />
+    <result column="scene_total" property="sceneTotal" jdbcType="REAL" />
+    <result column="scene_explain" property="sceneExplain" jdbcType="VARCHAR" />
+    <result column="scene_time" property="sceneTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    scene_id, open_id, scene_title, scene_snacks, scene_fare, scene_stay, scene_repast, 
+    scene_recreation, scene_clothing, scene_daily, scene_other, scene_total, scene_explain, 
+    scene_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="pojo.SceneExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from scene
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from scene
+    where scene_id = #{sceneId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from scene
+    where scene_id = #{sceneId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="pojo.SceneExample" >
+    delete from scene
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="pojo.Scene" >
+    insert into scene (scene_id, open_id, scene_title, 
+      scene_snacks, scene_fare, scene_stay, 
+      scene_repast, scene_recreation, scene_clothing, 
+      scene_daily, scene_other, scene_total, 
+      scene_explain, scene_time)
+    values (#{sceneId,jdbcType=INTEGER}, #{openId,jdbcType=VARCHAR}, #{sceneTitle,jdbcType=VARCHAR}, 
+      #{sceneSnacks,jdbcType=REAL}, #{sceneFare,jdbcType=REAL}, #{sceneStay,jdbcType=REAL}, 
+      #{sceneRepast,jdbcType=REAL}, #{sceneRecreation,jdbcType=REAL}, #{sceneClothing,jdbcType=REAL}, 
+      #{sceneDaily,jdbcType=REAL}, #{sceneOther,jdbcType=REAL}, #{sceneTotal,jdbcType=REAL}, 
+      #{sceneExplain,jdbcType=VARCHAR}, #{sceneTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="pojo.Scene" >
+    insert into scene
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sceneId != null" >
+        scene_id,
+      </if>
+      <if test="openId != null" >
+        open_id,
+      </if>
+      <if test="sceneTitle != null" >
+        scene_title,
+      </if>
+      <if test="sceneSnacks != null" >
+        scene_snacks,
+      </if>
+      <if test="sceneFare != null" >
+        scene_fare,
+      </if>
+      <if test="sceneStay != null" >
+        scene_stay,
+      </if>
+      <if test="sceneRepast != null" >
+        scene_repast,
+      </if>
+      <if test="sceneRecreation != null" >
+        scene_recreation,
+      </if>
+      <if test="sceneClothing != null" >
+        scene_clothing,
+      </if>
+      <if test="sceneDaily != null" >
+        scene_daily,
+      </if>
+      <if test="sceneOther != null" >
+        scene_other,
+      </if>
+      <if test="sceneTotal != null" >
+        scene_total,
+      </if>
+      <if test="sceneExplain != null" >
+        scene_explain,
+      </if>
+      <if test="sceneTime != null" >
+        scene_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sceneId != null" >
+        #{sceneId,jdbcType=INTEGER},
+      </if>
+      <if test="openId != null" >
+        #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="sceneTitle != null" >
+        #{sceneTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="sceneSnacks != null" >
+        #{sceneSnacks,jdbcType=REAL},
+      </if>
+      <if test="sceneFare != null" >
+        #{sceneFare,jdbcType=REAL},
+      </if>
+      <if test="sceneStay != null" >
+        #{sceneStay,jdbcType=REAL},
+      </if>
+      <if test="sceneRepast != null" >
+        #{sceneRepast,jdbcType=REAL},
+      </if>
+      <if test="sceneRecreation != null" >
+        #{sceneRecreation,jdbcType=REAL},
+      </if>
+      <if test="sceneClothing != null" >
+        #{sceneClothing,jdbcType=REAL},
+      </if>
+      <if test="sceneDaily != null" >
+        #{sceneDaily,jdbcType=REAL},
+      </if>
+      <if test="sceneOther != null" >
+        #{sceneOther,jdbcType=REAL},
+      </if>
+      <if test="sceneTotal != null" >
+        #{sceneTotal,jdbcType=REAL},
+      </if>
+      <if test="sceneExplain != null" >
+        #{sceneExplain,jdbcType=VARCHAR},
+      </if>
+      <if test="sceneTime != null" >
+        #{sceneTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="pojo.SceneExample" resultType="java.lang.Integer" >
+    select count(*) from scene
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update scene
+    <set >
+      <if test="record.sceneId != null" >
+        scene_id = #{record.sceneId,jdbcType=INTEGER},
+      </if>
+      <if test="record.openId != null" >
+        open_id = #{record.openId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sceneTitle != null" >
+        scene_title = #{record.sceneTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sceneSnacks != null" >
+        scene_snacks = #{record.sceneSnacks,jdbcType=REAL},
+      </if>
+      <if test="record.sceneFare != null" >
+        scene_fare = #{record.sceneFare,jdbcType=REAL},
+      </if>
+      <if test="record.sceneStay != null" >
+        scene_stay = #{record.sceneStay,jdbcType=REAL},
+      </if>
+      <if test="record.sceneRepast != null" >
+        scene_repast = #{record.sceneRepast,jdbcType=REAL},
+      </if>
+      <if test="record.sceneRecreation != null" >
+        scene_recreation = #{record.sceneRecreation,jdbcType=REAL},
+      </if>
+      <if test="record.sceneClothing != null" >
+        scene_clothing = #{record.sceneClothing,jdbcType=REAL},
+      </if>
+      <if test="record.sceneDaily != null" >
+        scene_daily = #{record.sceneDaily,jdbcType=REAL},
+      </if>
+      <if test="record.sceneOther != null" >
+        scene_other = #{record.sceneOther,jdbcType=REAL},
+      </if>
+      <if test="record.sceneTotal != null" >
+        scene_total = #{record.sceneTotal,jdbcType=REAL},
+      </if>
+      <if test="record.sceneExplain != null" >
+        scene_explain = #{record.sceneExplain,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sceneTime != null" >
+        scene_time = #{record.sceneTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update scene
+    set scene_id = #{record.sceneId,jdbcType=INTEGER},
+      open_id = #{record.openId,jdbcType=VARCHAR},
+      scene_title = #{record.sceneTitle,jdbcType=VARCHAR},
+      scene_snacks = #{record.sceneSnacks,jdbcType=REAL},
+      scene_fare = #{record.sceneFare,jdbcType=REAL},
+      scene_stay = #{record.sceneStay,jdbcType=REAL},
+      scene_repast = #{record.sceneRepast,jdbcType=REAL},
+      scene_recreation = #{record.sceneRecreation,jdbcType=REAL},
+      scene_clothing = #{record.sceneClothing,jdbcType=REAL},
+      scene_daily = #{record.sceneDaily,jdbcType=REAL},
+      scene_other = #{record.sceneOther,jdbcType=REAL},
+      scene_total = #{record.sceneTotal,jdbcType=REAL},
+      scene_explain = #{record.sceneExplain,jdbcType=VARCHAR},
+      scene_time = #{record.sceneTime,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="pojo.Scene" >
+    update scene
+    <set >
+      <if test="openId != null" >
+        open_id = #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="sceneTitle != null" >
+        scene_title = #{sceneTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="sceneSnacks != null" >
+        scene_snacks = #{sceneSnacks,jdbcType=REAL},
+      </if>
+      <if test="sceneFare != null" >
+        scene_fare = #{sceneFare,jdbcType=REAL},
+      </if>
+      <if test="sceneStay != null" >
+        scene_stay = #{sceneStay,jdbcType=REAL},
+      </if>
+      <if test="sceneRepast != null" >
+        scene_repast = #{sceneRepast,jdbcType=REAL},
+      </if>
+      <if test="sceneRecreation != null" >
+        scene_recreation = #{sceneRecreation,jdbcType=REAL},
+      </if>
+      <if test="sceneClothing != null" >
+        scene_clothing = #{sceneClothing,jdbcType=REAL},
+      </if>
+      <if test="sceneDaily != null" >
+        scene_daily = #{sceneDaily,jdbcType=REAL},
+      </if>
+      <if test="sceneOther != null" >
+        scene_other = #{sceneOther,jdbcType=REAL},
+      </if>
+      <if test="sceneTotal != null" >
+        scene_total = #{sceneTotal,jdbcType=REAL},
+      </if>
+      <if test="sceneExplain != null" >
+        scene_explain = #{sceneExplain,jdbcType=VARCHAR},
+      </if>
+      <if test="sceneTime != null" >
+        scene_time = #{sceneTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where scene_id = #{sceneId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pojo.Scene" >
+    update scene
+    set open_id = #{openId,jdbcType=VARCHAR},
+      scene_title = #{sceneTitle,jdbcType=VARCHAR},
+      scene_snacks = #{sceneSnacks,jdbcType=REAL},
+      scene_fare = #{sceneFare,jdbcType=REAL},
+      scene_stay = #{sceneStay,jdbcType=REAL},
+      scene_repast = #{sceneRepast,jdbcType=REAL},
+      scene_recreation = #{sceneRecreation,jdbcType=REAL},
+      scene_clothing = #{sceneClothing,jdbcType=REAL},
+      scene_daily = #{sceneDaily,jdbcType=REAL},
+      scene_other = #{sceneOther,jdbcType=REAL},
+      scene_total = #{sceneTotal,jdbcType=REAL},
+      scene_explain = #{sceneExplain,jdbcType=VARCHAR},
+      scene_time = #{sceneTime,jdbcType=VARCHAR}
+    where scene_id = #{sceneId,jdbcType=INTEGER}
+  </update>
+
+  <!--分页查询-->
+  <select id="selectSceneByLimit" resultMap="BaseResultMap" parameterType="PageInfo">
+    select
+    <include refid="Base_Column_List"/>
+    from scene
+    where open_id='${openId}'
+    limit ${start},${pageSize}
+  </select>
+</mapper>

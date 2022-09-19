@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:task = "http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/task
+        http://www.springframework.org/schema/task/spring-task-4.0.xsd"
+        default-lazy-init="false">
+    <!--default-lazy-init="true",此处配置为懒加载，所以如所有的bean都是懒加载的，
+    导致定时任务所在的bean根本没有实例化，里面的定时任务也没有执行。修改为：
+    default-lazy-init="false"即可。-->
+
+    <!--加入task命名空间
+    xmlns:task = "http://www.springframework.org/schema/task"
+    在xsi:schemaLocation中添加以下依赖
+    http://www.springframework.org/schema/task
+    http://www.springframework.org/schema/task/spring-task-4.0.xsd"
+    -->
+
+    <!--也需要配置扫描包，来扫描定时任务所在的包
+    <context:component-scan base-package="定时任务所在的包"/>-->
+
+    <!-- 配置定时器注解开关 里面可以配置很多参数，这里只是简单的打开task,并支持@Scheduled -->
+    <!--配置定时任务的线程池-->
+    <task:scheduler id="scheduler" pool-size="10"/>
+    <!--启用注解驱动的定时任务-->
+    <task:annotation-driven scheduler="scheduler" proxy-target-class="true"/>
+
+
+    <!-- 配置Controller扫描 -->
+    <context:component-scan base-package="controller"/>
+
+    <!-- 配置注解驱动 -->
+    <mvc:annotation-driven/>
+
+
+</beans>

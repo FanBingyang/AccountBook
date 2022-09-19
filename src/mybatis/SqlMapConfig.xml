@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!--配置在调用mybatis中xml文件里的那一条sql语句时可以将执行sql语句的相关信息打印在控制台
+    <settings>
+        <setting name= "mapUnderscoreToCamelCase" value = "true"/>
+        <setting name="logImpl" value="STDOUT_LOGGING" />
+    </settings>
+    -->
+    <!-- 别名 -->
+    <typeAliases>
+        <package name="pojo"/>
+    </typeAliases>
+</configuration>
